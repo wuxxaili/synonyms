@@ -69,7 +69,7 @@ class crawler():
                 if word not in xinpai:
                     Synony_xinpai[word] = []
                     newurl = 'http://jinyici.xpcha.com/' + s['href'].encode('ascii')
-                    newhtml = open_url(newurl)
+                    newhtml = self.open_url(newurl)
                     newsoup = BeautifulSoup.BeautifulSoup(newhtml)
                     newsyn = newsoup.findAll("dl", {"class":"shaixuan_1"})[0].findAll('span')
                     for syn in newsyn:
