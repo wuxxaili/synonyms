@@ -16,7 +16,7 @@ import cookielib
 
 ## In fact, I didn't use the method "mock a browser" since I can easily get the url, the speed is much faster than mock a browser.
 
-class crawler(obejct):
+class crawler():
     def __init__(self):
         ## Those work for function crawler_xinpai_browser
         self.br = mechanize.Browser()
