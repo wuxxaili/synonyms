@@ -98,7 +98,7 @@ class crawler():
     def crawler_jyc_browser(self,word):
         self.driver.find_element_by_name('f_key').send_keys(word.decode('utf-8'))
         self.driver.find_element_by_name('SearchString').click()
-        html = self.open_url(driver.current_url)
+        html = self.open_url(self.driver.current_url)
         soup = BeautifulSoup.BeautifulSoup(html)
         try:
             s = soup.findAll("td",{"width": '88%'})[0]
