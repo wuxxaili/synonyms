@@ -32,7 +32,9 @@ class crawler():
         # Follows refresh 0 but not hangs on refresh > 0
         self.br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
         self.br.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
-
+        ## Update 7.25 crawls from http://jyc.5156edu.com/ using selenium
+        self.driver = webdriver.PhantomJS()
+        self.driver.get("http://jyc.5156edu.com/")
 
     
     ## This function crawls all the synonyms from http://jyc.kxue.com
@@ -91,6 +93,19 @@ class crawler():
             for k in s.findAll('a'):
                 res.append(str(k.string.encode('utf-8')))
         return res
+    
+    def crawler_jyc_browser(self,word):
+        self.driver.find_element_by_name('f_key').send_keys(word.decode('utf-8'))
+        self.driver.find_element_by_name('SearchString').click()
+        html = self.open_url(driver.current_url)
+        soup = BeautifulSoup.BeautifulSoup(html)
+        try:
+            s = soup.findAll("td",{"width": '88%'})[0]
+            a = str(s)
+            res = re.findall(r'>[\x80-\xff]*\(',a)
+            return [i[1:-1] for i in res]
+        except IndexError:
+            return []
     
     def crawler_baidu_browser(self,word):
         driver = webdriver.PhantomJS()
